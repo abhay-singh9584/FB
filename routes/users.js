@@ -5,7 +5,7 @@ const { Passport } = require('passport');
 const passport = require('passport');
 var passportLocalMongoose  =require('passport-local-mongoose');
 
-mongoose.connect('mongodb+srv://abhay9584:Abhay@9584@cluster0.xfnpo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://abhay9584:abhay9584@cluster0.xfnpo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
 var userSchema=mongoose.Schema({
   username:String,
