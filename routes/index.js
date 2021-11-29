@@ -217,5 +217,9 @@ router.get('/user/:m',isLoggedIn,function(req,res){
   })
 })
 
+router.get('/loginpage',function(req,res){
+  res.render('loginpage')
+})
+
 module.exports = router; 
 
