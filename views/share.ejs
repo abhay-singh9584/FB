@@ -10,79 +10,42 @@
   </head>
   <body>
     <style>
-      #section{
-          height: 170px;
-          width: 100%;
-          margin-top: 130px;
-          margin-bottom: -50px;
+      #cf{
+        padding: 15px 40px;
+      }
+
+      @media(max-width: 500px){
+        #cf{
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          /* padding: 20px; */
-          /* background-color: red; */
-      }
-      .img{
-          height: 180px;
-      }
-      .details{
-          margin-left: 50px;
-          width: 700px;
-          font-size: 20px;   
-      }
-      .details a{
-          text-decoration: none;
-          color: black;
-      }
-      #cart{
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        font-size: 18px;
-        /* display: flex;
-        align-items: center; */
-        text-align: center;
-        /* margin-left: 10px; */
-        margin-bottom: 10px;
-        top: 20px;
-        right: 120px;
-        background-color: red;
-        border-radius: 50%;
-    }
-    
-    input i{
-        margin-left: 12px;
-        color: white;
-    }
-      #section h4{
-          font-size: 22px;
-          margin-top: 10px;
-      }
-      .details button{
-          margin-top: 40px;
-          padding: 5px;
-          margin-right: 10px;
-          /* border: none; */
-          border-radius: 2px;
-      }
-      #a{
-          height: 30px;
-      }
-      #ser{
-          position: absolute;
-          /* margin-left: -100px; */
-          /* left: -200px;    */
-          right: 150px;
-          font-weight: 600;
-          opacity: .5;
-          color: black;
+          padding: 5px 5px;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          align-content: center;
+        }
+        textarea{
+          height: 80px;
+          width: 250px;
+        }
+        #block{
+          font-size: 12px;
+        }
+        .navbar-brand{
+          font-size: 20px;
+        }
       }
     </style>
     <nav class="navbar navbar-dark bg-primary" >
-      <div class="container-fluid d-flex" style="padding: 15px 40px;">
+      <div class="container-fluid d-flex" id="cf">
         <a class="navbar-brand" href="/profile" style="font-family: ogg; font-weight: 800; font-size: 28px;">CHEAP</a>
-        <div class="block" style="font-size: 18px;">
+        <div class="block" id="block">
           <a href="/user" style="color: white; margin-right: 50px; text-decoration: none;"><%=b.name%></a>
-          <a href="/recived" style="text-decoration: none; color: white; margin-right: 30px;"><i class="ri-share-box-line"><p id="cart"><%=b.share.length%></p></i></a>
+          <a style="text-decoration: none; margin-right: 30px" href='/recived' type="button" class="btn btn-primary position-relative">
+            Share
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              <%=b.share.length%>
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </a>
           <a href="/logout" style="color: white; text-decoration: none;">LogOut</a>
         </div>
       </div>

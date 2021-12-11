@@ -15,7 +15,10 @@ var userSchema=mongoose.Schema({
     type:Array,
   },
   share:Array,
-  books:[{type:mongoose.Schema.Types.ObjectId,ref:'book'}]
+  secret:String,
+  books:[{type:mongoose.Schema.Types.ObjectId,ref:'book'}],
+  friends:Array
+
 })
 userSchema.plugin(passportLocalMongoose);
 // mongoose.plugin(passportLocalMongoose)

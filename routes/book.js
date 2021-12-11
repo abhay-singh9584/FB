@@ -4,6 +4,9 @@ var mongoose=require('mongoose')
 
 const bookSchema=mongoose.Schema({
   dis:String,
+  profilepic:{
+    type:Array,
+  },
   like:{
     type:Array,
     default:[]

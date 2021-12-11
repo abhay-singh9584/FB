@@ -5,12 +5,17 @@ var router = express.Router();
 var userModel=require('./users')
 var bookModel=require('./book')
 const multer  = require('multer')
+const mailer=require('./nodemailer')
+const {uuid}=require('uuidv4')
+const message=require('messagebird')
+// x=uuid.create()
 
 
 const localStrategy = require('passport-local');
-const { Passport, session } = require('passport');
+const { Passport, session, authenticate } = require('passport');
 
 const { populate } = require('./users');
+const { default: messagebird } = require('messagebird');
 
 passport.use(new localStrategy(userModel.authenticate()));
 
@@ -192,7 +197,6 @@ router.get('/share/:x/:y',function(req,res){
         i.share.push([j,j.user.name,j.user.profilepic])
         i.save()
         res.redirect('/profile')
-      
     })
   })
 })
@@ -219,6 +223,67 @@ router.get('/user/:m',isLoggedIn,function(req,res){
 
 router.get('/loginpage',function(req,res){
   res.render('loginpage')
+})
+
+router.post('/search',function(req,res){
+  userModel.find({username:req.body.search} || {name:req.body.name})
+  .then(function(e){
+    userModel.findOne({usename:req.session.passport.user})
+    .then(function(b){
+      res.render('search',{data:e,b:b})
+    })
+  })
+})
+
+router.get('/forgotpass',function(req,res){
+  res.render('forgot')
+})
+// console.log(uuid())
+router.post('/password',function(req,res){
+  userModel.findOne({username:req.body.usename})
+  .then(function(z){
+    var y=uuidv4()
+    console.log("mail send")
+    // console.log(y)
+    z.save()
+    .then(function(j){
+      var new1=`hhtps://localhost:3000/createp/${j._id}/${y}`
+      mailer(new1)
+    })
+  })
+})
+
+router.get('/allfriend',function(req,res){
+  userModel.findOne({username:req.session.passport.user})
+  .then(function(i){
+    userModel.find()
+    .then(function(user){
+      res.render('friends',{b:i,user:user})
+    })
+  })
+})
+
+router.get('/add/:id',function(req,res){
+  userModel.findOne({usename:req.session.passport.user})
+  .then(function(i){
+    userModel.findOne({_id:req.params.id})
+    .then(function(j){
+      if(i.friends.indexOf(j.name)==-1){
+        i.friends.push(j.name)
+        i.save()
+      }
+      res.redirect('/allfriend')
+    })
+  })
+})
+
+router.get('/remove/:a',function(req,res){
+  userModel.findOne({usename:req.session.passport.user})
+  .then(function(m){
+    m.friends.pop(req.params.a)
+    m.save()
+    res.redirect('/allfriend')
+  })
 })
 
 module.exports = router; 
